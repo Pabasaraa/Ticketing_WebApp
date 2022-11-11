@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ref, set } from "firebase/database";
 
-import startFirebase from "../firebase";
+import startFirebase from "../config";
 
+// Importing css file for styling
 import styles from "../style_sheets/Add.module.css";
+
+// Importing images for the page
 import addImg from "../img/add1.svg";
 import addImg3 from "../img/box2.png";
 import addImg4 from "../img/box4.png";
@@ -12,6 +15,7 @@ import addImg5 from "../img/box3.png";
 import addImg6 from "../img/logo2.jpeg";
 import photo from "../img/proflie.png";
 
+// Importing react icons
 import { RiHome6Line } from "react-icons/ri";
 import { BsBookmarkDash, BsCheckSquare } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
@@ -26,9 +30,14 @@ export default function AddRoutes() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
+    // set the firebase connection to the state
     setDb(startFirebase());
   }, []);
 
+  /**
+   * Get all user inputs & return an object
+   * @returns data to the insert function
+   */
   function getAllInputs() {
     const data = {
       routeNo,
@@ -41,7 +50,13 @@ export default function AddRoutes() {
     return data;
   }
 
-  //after click in submit button
+  /**
+  * Calls when the user clicks on the submit button
+  * Get the data from the getAllInputs() method and store in the firebase database
+  * 
+  * @param {object} e - event object
+  * @returns {void}
+  */
   function insertData(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -132,16 +147,8 @@ export default function AddRoutes() {
       {/* header */}
       <div className={styles.mainContent}>
         <header className={styles.headert}>
-          {/* <h4 className={styles}>
-            <label className={styles.lable1}>
-            <span className={styles.icon1}>< RiAdminFill/></span>
-            </label>
-            Maneger Panel
-          </h4> */}
-
           <div className={styles.userWrapper}>
             <img src={photo} className={styles.Profile}></img>
-
             <div></div>
             <h4>jeney Deo</h4>
             <small className={styles.userName}>Manager</small>
@@ -198,7 +205,6 @@ export default function AddRoutes() {
                         setRouteNo(e.target.value);
                       }}
                     />
-                    {/* name value assing */}
                   </div>
 
                   <div className={`form-group text-left ${styles.input}`}>
@@ -215,7 +221,6 @@ export default function AddRoutes() {
                         setDeparture(e.target.value);
                       }}
                     />
-                    {/* name value assing */}
                   </div>
 
                   <div className={`form-group text-left ${styles.input}`}>
@@ -274,8 +279,6 @@ export default function AddRoutes() {
             </div>
 
             <div className={styles.summary}>
-              {/* <img src={addImg} alt="Logo" className={styles.add3}/>  */}
-
               <img src={addImg} alt="Logo" className={styles.add1} />
             </div>
           </section>

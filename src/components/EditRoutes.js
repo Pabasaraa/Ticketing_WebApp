@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { ref, set, get, child } from "firebase/database";
-import startFirebase from "../firebase";
+import startFirebase from "../config";
 import { Link, useParams } from "react-router-dom";
 
+// Importing css file for styling
 import styles from "../style_sheets/Add.module.css";
 
+// Importing images for the page
 import photo from "../img/proflie.png";
 import addImg from "../img/update2.svg";
 import addImg6 from "../img/logo2.jpeg";
@@ -12,6 +14,7 @@ import addImg3 from "../img/box2.png";
 import addImg4 from "../img/box4.png";
 import addImg5 from "../img/box3.png";
 
+// Importing react icons
 import { RiHome6Line } from "react-icons/ri";
 import { BsBookmarkDash, BsCheckSquare } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
@@ -26,11 +29,17 @@ export default function EditRoutes() {
 
   const { id } = useParams();
 
+  // set the firebase connection to the db state
   const db = startFirebase();
 
   function selectData() {
     const dbref = ref(db);
 
+    /**
+     * Get the existing data from firebase database and set it to the form fields
+     * 
+     * @returns {void}
+     */
     get(child(dbref, "routes/" + id)).then((snapshot) => {
       if (snapshot.exists()) {
         console.log(snapshot.val());
@@ -46,10 +55,15 @@ export default function EditRoutes() {
   }
 
   useEffect(() => {
+    // Call the function to get the data from firebase database
     selectData();
     console.log(id);
   }, []);
 
+  /**
+   * Get all user inputs & return an object
+   * @returns data to the update function
+   */
   function getAllInputs() {
     const data = {
       routeNo,
@@ -61,7 +75,14 @@ export default function EditRoutes() {
     console.log(data);
     return data;
   }
-
+  
+  /**
+  * Calls when the user clicks on the update button
+  * Get the updated data from the getAllInputs() method and store in the firebase database
+  * 
+  * @param {object} e - event object
+  * @returns {void}
+  */
   function updateData(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -151,16 +172,8 @@ export default function EditRoutes() {
       {/* header */}
       <div className={styles.mainContent}>
         <header className={styles.headert}>
-          {/* <h4 className={styles}>
-            <label className={styles.lable1}>
-            <span className={styles.icon1}>< RiAdminFill/></span>
-            </label>
-            Maneger Panel
-          </h4> */}
-
           <div className={styles.userWrapper}>
             <img src={photo} className={styles.Profile}></img>
-
             <div></div>
             <h4>jeney Deo</h4>
             <small className={styles.userName}>Manager</small>

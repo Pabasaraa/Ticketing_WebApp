@@ -1,24 +1,35 @@
 import React, { Component } from "react";
 import { ref, onValue, remove } from "firebase/database";
 import { Link } from "react-router-dom";
-import startFirebase from "../firebase";
+import startFirebase from "../config";
 
+// Importing css file for styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../style_sheets/All.module.css";
 
+// Importing images from the img directory
 import photo from "../img/proflie.png";
 import addImg3 from "../img/box2.png";
 import addImg4 from "../img/box4.png";
 import addImg5 from "../img/box3.png";
 import addImg6 from "../img/logo2.jpeg";
 
+// Importing react icons
 import { TbCalendarTime } from "react-icons/tb";
 import { RiHome6Line } from "react-icons/ri";
 import { BsBookmarkDash, BsCheckSquare } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 
+// Start firebase database
 const db = startFirebase();
 
+/**
+ * Get the data from firebase database and display it in a table
+ * 
+ * @returns table with the data
+ * @param {*} props
+ * @returns {void}
+ */
 export default class AllRoutes extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +40,11 @@ export default class AllRoutes extends Component {
   componentDidMount() {
     const dbRef = ref(db, "routes/");
 
+    // Get the data from firebase database
     onValue(dbRef, (snapshot) => {
       let records = [];
 
+      // Get the data from firebase database and store it in an array
       snapshot.forEach((childSnapshot) => {
          const childData = childSnapshot.val();
          records.push(childData);
@@ -40,6 +53,7 @@ export default class AllRoutes extends Component {
     });
   }
 
+  // Delete the specified data from firebase database
   onDelete(id) {
       const dbRef = ref(db, "routes/" + id);
       remove(ref(db, "routes/" + id)).then(() => {
